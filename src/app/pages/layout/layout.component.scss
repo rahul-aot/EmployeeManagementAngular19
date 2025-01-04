@@ -1,0 +1,25 @@
+@media screen and (min-width: 992px) {
+    .navbar .container-fluid,
+    .navbar-expand-lg .navbar-collapse,
+    .navbar-expand-lg .navbar-nav {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .navbar {
+      width: 16.66666667%;
+      height: 100vh;
+      align-items: flex-start;
+    }
+    .navbar-brand {
+      margin-left: 0.5rem;
+    }
+  }
+  .navbar .navbar-nav .nav-link {
+    color: #fff;
+    font-size: 1.1em;
+  }
+  .navbar-brand {
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+  
