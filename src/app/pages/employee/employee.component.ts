@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { MasterService } from '../../services/master.service';
 import { Employee, IApiResponse, IchildDepartment, IparentDepartment } from '../../model/Employee';
 import { FormsModule } from '@angular/forms';
@@ -24,9 +24,18 @@ export class EmployeeComponent implements OnInit{
   masterService = inject(MasterService);
   employeeService = inject(EmployeeService);
 
+  isSidePanel = signal<boolean>(false);
+
   ngOnInit(): void {
     this.getParentDeptList();
     this.showEmployeeList();
+  }
+
+  openSidePanel(){
+    this.isSidePanel.set(true);
+  }
+  closeSidePanel(){
+    this.isSidePanel.set(false);
   }
 
   editEmployee(Obj: any){
@@ -47,6 +56,7 @@ export class EmployeeComponent implements OnInit{
 
   onSubmit(){
     this.employeeService.createNewEmployee(this.EmployeeObj).subscribe((res: Employee) => {
+      this.closeSidePanel();
         alert("Employee Created Successfully");
         this.showEmployeeList();
     },error => {
@@ -62,12 +72,22 @@ export class EmployeeComponent implements OnInit{
   }
 
   deleteEmployee(id: number){
-;    if(!confirm("Are you sure you want to delete this employee?")){
+    if(!confirm("Are you sure you want to delete this employee?")){
       return;
     }
     this.employeeService.deleteEmployeeById(id).subscribe((res: Employee) => {
       alert("Employee Deleted Successfully");
       this.showEmployeeList();
     });
+  }
+
+  onEdit(){
+    this.employeeService.updateEmployee(this.EmployeeObj).subscribe((res: Employee) => {
+      alert("Employee Updated Successfully");
+      this.closeSidePanel();
+      this.showEmployeeList();
+  },error => {
+    alert("Something went wrong");
+  })
   }
 }

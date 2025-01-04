@@ -19,7 +19,10 @@ export class EmployeeService {
   }
 
   deleteEmployeeById(id: number){
-    debugger
     return this.http.delete<Employee>(`https://projectapi.gerasim.in/api/EmployeeManagement/DeleteEmployee/${id}`);
+  }
+
+  updateEmployee(obj: Employee){
+    return this.http.put<Employee>('https://projectapi.gerasim.in/api/EmployeeManagement/UpdateEmployee/'+ obj.employeeId, obj);
   }
 }
