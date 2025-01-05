@@ -1,1 +1,79 @@
-<p>project works!</p>
+<div class="row">
+    @if(currentView === 'list'){
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-warning d-flex justify-content-between align-items-center">
+                    <h5> Project List</h5>
+                    <button class="btn btn-primary" (click)="currentView = 'new'">Add New</button>
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Project ID</th>
+                            <th>Project Name</th>
+                            <th>Client Name</th>
+                            <th>Start Date</th>
+                            <th>Lead By Employee</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- <tr *ngFor="let project of projects">
+                            <td>{{project.projectName}}</td>
+                            <td>{{project.startDate | date: 'dd/MM/yyyy'}}</td>
+                            <td>{{project.endDate | date: 'dd/MM/yyyy'}}</td>
+                        </tr> -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }@else {
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-warning d-flex justify-content-between align-items-center">
+                    <h5> New Project</h5>
+                    <button class="btn btn-danger" (click)="currentView = 'list'">Close</button>
+                </div>
+                <form class="card-body d-grid gap-3" style="grid-template-columns: repeat(2, 1fr);" [formGroup]="projectForm">
+                    <div class="col-6 mt-2">
+                        <label>Project Name</label>
+                        <input type="text"  formControlName="projectName" class="form-control" placeholder="Enter Employee Name">
+                    </div>
+                    <div class="col-6 mt-2">
+                        <label>Client Name</label>
+                        <input type="text" formControlName="ClientName" class="form-control" placeholder="Enter Client Name">
+                    </div>
+                    <div class="col-6 mt-2">
+                        <label>Start Date</label>
+                        <input type="date" formControlName="startDate" class="form-control" placeholder="Enter Start Date">
+                    </div>
+                    <div class="col-6 mt-2">
+                        <label>Lead By Employee ID</label>
+                       <select>
+                           <option selected="selected">Select Employee</option>
+                           <option *ngFor="let employee of EmployeeData$ | async" [value]="employee.employeeId">{{employee.employeeName}}</option>
+                       </select>
+                    </div>
+                    <div class="col-6 mt-2">
+                        <label>Contact Person</label>
+                        <input type="text" formControlName="contactPerson" class="form-control" placeholder="Enter Contact Person Name">
+                    </div>
+                    <div class="col-6 mt-2">
+                        <label>Contact No</label>
+                        <input type="text" formControlName="contactNo" class="form-control" placeholder="Enter Contact No">
+                    </div>
+                    <div class="col-6 mt-2">
+                        <label>Email</label>
+                        <input type="text" formControlName="emailId" class="form-control" placeholder="Enter Email">
+                    </div>
+                    <div class="col-6 mt-2">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    }
+</div>

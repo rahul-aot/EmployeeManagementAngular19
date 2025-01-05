@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Employee, IApiResponse } from '../model/Employee';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +14,19 @@ export class EmployeeService {
     return this.http.post<Employee>('https://projectapi.gerasim.in/api/EmployeeManagement/CreateEmployee', obj);
   }
 
-  getAllEmployees(){
-    return this.http.get<Employee[]>('https://projectapi.gerasim.in/api/EmployeeManagement/GetAllEmployees');
+  // getAllEmployees(){
+  //   return this.http.get<Employee[]>();
+  // }
+
+  getAllEmployees(): Observable<Employee[]> {
+    debugger
+    return this.http.get<Employee[]>('https://projectapi.gerasim.in/api/EmployeeManagement/GetAllEmployees').pipe(
+      catchError((error) => {
+        debugger
+        console.error('Error fetching employees:', error);
+        return throwError(error);
+      })
+    );
   }
 
   deleteEmployeeById(id: number){
