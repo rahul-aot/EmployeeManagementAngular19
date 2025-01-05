@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Employee, IApiResponse, Project } from '../model/Employee';
+import { Employee, EmployeeProject, IApiResponse, Project } from '../model/Employee';
 import { catchError, Observable, throwError } from 'rxjs';
 
 @Injectable({
@@ -47,6 +47,15 @@ export class EmployeeService {
 
   updateProject(obj: Project){
     return this.http.put<Project>(this.apiUrl + 'UpdateProject/'+ obj.projectId, obj);
+  }
+
+  addNewEmp(obj: EmployeeProject){
+    debugger
+    return this.http.post<EmployeeProject>(this.apiUrl + 'CreateProjectEmployee', obj);
+  }
+
+  getEmployeeProjects(id: number){
+    return this.http.get<EmployeeProject[]>(this.apiUrl + 'GetAllProjectEmployee/' + id);
   }
 
 }

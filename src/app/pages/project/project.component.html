@@ -87,33 +87,59 @@
 
 
 <div class="modal" tabindex="-1" #mymodel>
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">project Employees </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="onCloseEmployee()"></button>
         </div>
         <div class="modal-body">
           <div class="row">
             <div class="col-3">
-                <select>
-
+                <select class="form-select" [(ngModel)]="employeeProject.empId">
+                    <option selected="selected" value="0">Select Employee</option>
+                    <option *ngFor="let emp of EmployeeData$ | async" [value]="emp.employeeId">{{emp.employeeName}}</option>
                 </select>
             </div>
             <div class="col-3">
-                <input type="text">
+
+                <input type="text" placeholder="Role" class="form-control" [(ngModel)]="employeeProject.role">
             </div>
             <div class="col-3">
-                <input type="text">
+                <input type="date" class="form-control" [(ngModel)]="employeeProject.assignedDate">
             </div>
             <div class="col-3">
-                <input type="button">
+                <input type="button" class="btn btn-sm btn-primary" value="Add" (click)="addProjectEmployee()">
             </div>
-            
+          </div>
+          <div class="row pt-3">
+            <div class="col-12">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Project ID</th>
+                            <th>Project Name</th>
+                            <th>Employee Name</th>
+                            <th>Start Date</th>
+                            <th>Lead By Employee</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <!-- <tbody>
+                        <tr *ngFor="let employee of EmployeeData$ | async">
+                            <td>{{employee.employeeId}}</td>
+                            <td>{{employee.employeeName}}</td>
+                            <td>{{employee.contactNo}}</td>
+                            <td>{{employee.emailId}}</td>
+                            <td>{{employee.department}}</td>
+                            <td>{{employee.role}}</td>
+                        </tr>
+                    </tbody> -->
+                </table>
+            </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="onCloseEmployee()">Close</button>
           <button type="button" class="btn btn-primary" (click)="onCloseEmployee()">Save changes</button>
         </div>
       </div>

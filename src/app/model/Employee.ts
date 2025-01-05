@@ -51,3 +51,20 @@ export interface Project {
     contactNo: string,
     emailId: string,
 }
+
+export class EmployeeProject {
+    empProjectId: number;
+    projectId: number;
+    empId: number;
+    assignedDate: string;
+    role:string;
+    isActive: boolean;
+    constructor(){
+        this.empProjectId = 0;
+        this.projectId = 0;
+        this.empId = 0;
+        this.assignedDate = "";
+        this.role = "";
+        this.isActive = true;
+    }
+}

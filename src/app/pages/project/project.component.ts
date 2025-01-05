@@ -1,13 +1,13 @@
 import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { Employee, Project } from '../../model/Employee';
+import { Employee, EmployeeProject, Project } from '../../model/Employee';
 import { EmployeeService } from '../../services/employee.service';
 import { AsyncPipe, CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-project',
-  imports: [ReactiveFormsModule, AsyncPipe, CommonModule],
+  imports: [ReactiveFormsModule, AsyncPipe, CommonModule,FormsModule],
   templateUrl: './project.component.html',
   styleUrl: './project.component.scss'
 })
@@ -25,6 +25,8 @@ export class ProjectComponent implements OnInit {
 
   projectForm: FormGroup = new FormGroup({});
 
+  employeeProject: EmployeeProject = new EmployeeProject();
+
   constructor() {
     this.initializeForm();
     this.EmployeeData$ =this.employeeService.getAllEmployees();
@@ -40,6 +42,8 @@ export class ProjectComponent implements OnInit {
   }
 
   onaddEmployee(projectId: number){
+    debugger
+    this.employeeProject.empProjectId = projectId;
     if(this.EmployeeModel){
       this.EmployeeModel.nativeElement.style.display= 'block';
     }
@@ -97,5 +101,9 @@ export class ProjectComponent implements OnInit {
     this.initializeForm(project);
   }
 
-  
+  addProjectEmployee(){
+    this.employeeService.addNewEmp(this.employeeProject).subscribe((res: EmployeeProject) => {
+      alert("Employee Added Successfully"); 
+    })
+  }
 }
