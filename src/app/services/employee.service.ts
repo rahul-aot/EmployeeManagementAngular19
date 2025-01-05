@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Employee, IApiResponse } from '../model/Employee';
+import { Employee, IApiResponse, Project } from '../model/Employee';
 import { catchError, Observable, throwError } from 'rxjs';
 
 @Injectable({
@@ -8,10 +8,12 @@ import { catchError, Observable, throwError } from 'rxjs';
 })
 export class EmployeeService {
 
+  apiUrl: string = 'https://projectapi.gerasim.in/api/EmployeeManagement/';
+
   constructor(private http: HttpClient) { }
 
   createNewEmployee(obj: Employee){
-    return this.http.post<Employee>('https://projectapi.gerasim.in/api/EmployeeManagement/CreateEmployee', obj);
+    return this.http.post<Employee>(this.apiUrl + 'CreateEmployee', obj);
   }
 
   // getAllEmployees(){
@@ -19,10 +21,8 @@ export class EmployeeService {
   // }
 
   getAllEmployees(): Observable<Employee[]> {
-    debugger
-    return this.http.get<Employee[]>('https://projectapi.gerasim.in/api/EmployeeManagement/GetAllEmployees').pipe(
+    return this.http.get<Employee[]>(this.apiUrl + 'GetAllEmployees').pipe(
       catchError((error) => {
-        debugger
         console.error('Error fetching employees:', error);
         return throwError(error);
       })
@@ -30,10 +30,23 @@ export class EmployeeService {
   }
 
   deleteEmployeeById(id: number){
-    return this.http.delete<Employee>(`https://projectapi.gerasim.in/api/EmployeeManagement/DeleteEmployee/${id}`);
+    return this.http.delete<Employee>(this.apiUrl + `DeleteEmployee/${id}`);
   }
 
   updateEmployee(obj: Employee){
-    return this.http.put<Employee>('https://projectapi.gerasim.in/api/EmployeeManagement/UpdateEmployee/'+ obj.employeeId, obj);
+    return this.http.put<Employee>(this.apiUrl + 'UpdateEmployee/'+ obj.employeeId, obj);
   }
+
+  createNewProject(obj: Employee){
+    return this.http.post<Project>(this.apiUrl + 'CreateProject', obj);
+  }
+
+  getprojects(){
+    return this.http.get<Project[]>(this.apiUrl + 'GetAllProjects');
+  }
+
+  updateProject(obj: Project){
+    return this.http.put<Project>(this.apiUrl + 'UpdateProject/'+ obj.projectId, obj);
+  }
+
 }

@@ -16,16 +16,22 @@
                             <th>Client Name</th>
                             <th>Start Date</th>
                             <th>Lead By Employee</th>
-                            <th>Status</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- <tr *ngFor="let project of projects">
+                        <tr *ngFor="let project of projectList">
+                            <td>{{project.projectId}}</td>
                             <td>{{project.projectName}}</td>
-                            <td>{{project.startDate | date: 'dd/MM/yyyy'}}</td>
-                            <td>{{project.endDate | date: 'dd/MM/yyyy'}}</td>
-                        </tr> -->
+                            <td>{{project.clientName}}</td>
+                            <td>{{project.startDate | date : 'dd/MMM/yyyy'}}</td>
+                            <td>{{project.leadByEmpId}}</td>
+                            <td>
+                                <button class="btn btn-primary" (click)="currentView = 'new'" (click)="editProject(project)">Edit</button>
+                                <!-- <button class="btn btn-danger" >Delete</button> -->
+                                <button class="btn btn-success mx-2" (click)="onaddEmployee(project.projectId)">Employee</button>
+
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -37,7 +43,7 @@
                     <h5> New Project</h5>
                     <button class="btn btn-danger" (click)="currentView = 'list'">Close</button>
                 </div>
-                <form class="card-body d-grid gap-3" style="grid-template-columns: repeat(2, 1fr);" [formGroup]="projectForm">
+                <form class="card-body d-grid gap-3" style="grid-template-columns: repeat(2, 1fr);" [formGroup]="projectForm" (ngSubmit)="onSubmit()">
                     <div class="col-6 mt-2">
                         <label>Project Name</label>
                         <input type="text"  formControlName="projectName" class="form-control" placeholder="Enter Employee Name">
@@ -52,7 +58,7 @@
                     </div>
                     <div class="col-6 mt-2">
                         <label>Lead By Employee ID</label>
-                       <select>
+                       <select class="form-control" formControlName="leadByEmpId">
                            <option selected="selected">Select Employee</option>
                            <option *ngFor="let employee of EmployeeData$ | async" [value]="employee.employeeId">{{employee.employeeName}}</option>
                        </select>
@@ -70,6 +76,7 @@
                         <input type="text" formControlName="emailId" class="form-control" placeholder="Enter Email">
                     </div>
                     <div class="col-6 mt-2">
+                        <button *ngIf="" type="submit" class="btn btn-primary">Submit</button>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                 </form>
@@ -77,3 +84,38 @@
         </div>
     }
 </div>
+
+
+<div class="modal" tabindex="-1" #mymodel>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">project Employees </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-3">
+                <select>
+
+                </select>
+            </div>
+            <div class="col-3">
+                <input type="text">
+            </div>
+            <div class="col-3">
+                <input type="text">
+            </div>
+            <div class="col-3">
+                <input type="button">
+            </div>
+            
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="onCloseEmployee()">Close</button>
+          <button type="button" class="btn btn-primary" (click)="onCloseEmployee()">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
