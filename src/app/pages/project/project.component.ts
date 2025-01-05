@@ -27,6 +27,11 @@ export class ProjectComponent {
     this.initializeForm();
     debugger
     this.EmployeeData$ =this.employeeService.getAllEmployees();
+
+    this.EmployeeData$.subscribe({
+      next: (data) => console.log('Employee data received:', data),
+      error: (err) => console.error('Error fetching employees:', err),
+    });
   }
 
   initializeForm(){
